@@ -1,1 +1,27 @@
+name: Node to Dcoker
+
+on:
+  push:
+    branchs:
+      - main
+  pull_request:
+    branchs:
+      - main
+
+jobs:
+  build_and_push:
+    steps:
+      - name: Check code
+        uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
+      - name:
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/eshopweb:latest
 
